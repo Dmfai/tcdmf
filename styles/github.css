@@ -1,0 +1,379 @@
+/* ===== GitHub 周榜页面样式 ===== */
+
+/* Hero */
+.gh-hero {
+  text-align: center;
+  padding: 64px 24px 40px;
+  position: relative;
+  overflow: hidden;
+}
+.gh-hero-glow {
+  position: absolute;
+  top: -30%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 600px;
+  height: 600px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(45,164,78,0.08), rgba(3,102,214,0.05), transparent 70%);
+  pointer-events: none;
+  animation: heroGlow 8s ease-in-out infinite alternate;
+}
+.gh-hero-title {
+  font-size: clamp(2rem, 5vw, 2.8rem);
+  font-weight: 800;
+  letter-spacing: -1px;
+  color: var(--color-primary);
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+.gh-hero-icon { font-size: 1.6rem; }
+.gh-hero-badge {
+  font-size: 0.7rem;
+  font-weight: 600;
+  background: linear-gradient(135deg, #2da44e, #1a7f37);
+  color: #fff;
+  padding: 4px 10px;
+  border-radius: 50px;
+  vertical-align: middle;
+  animation: blink 2s ease-in-out infinite;
+}
+.gh-hero-sub {
+  font-size: 1.05rem;
+  color: var(--color-text-light);
+  margin-bottom: 16px;
+}
+.gh-hero-meta {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+  font-size: 13px;
+  color: var(--color-text-muted);
+}
+.gh-refresh-btn {
+  padding: 6px 16px;
+  border: 1px solid var(--color-border);
+  border-radius: 50px;
+  background: var(--color-card);
+  color: var(--color-text-light);
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.25s;
+  font-family: inherit;
+}
+.gh-refresh-btn:hover:not(:disabled) {
+  border-color: #2da44e;
+  color: #2da44e;
+  transform: translateY(-1px);
+}
+.gh-refresh-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* 容器 */
+.gh-container {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+/* Tab 栏 */
+.gh-tabs {
+  display: flex;
+  gap: 4px;
+  padding: 4px;
+  background: var(--color-bg-alt);
+  border-radius: var(--radius-lg);
+  margin-bottom: 12px;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  flex-wrap: nowrap;
+}
+.gh-tab {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 14px;
+  border: none;
+  border-radius: calc(var(--radius-lg) - 4px);
+  background: transparent;
+  color: var(--color-text-light);
+  font-size: 13px;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  border-bottom: 3px solid transparent;
+}
+.gh-tab:hover {
+  color: var(--color-text);
+  background: var(--color-card);
+}
+.gh-tab--active {
+  color: var(--tab-color, #2da44e) !important;
+  background: var(--color-card);
+  box-shadow: var(--shadow-sm);
+  border-bottom-color: var(--tab-color, #2da44e);
+}
+.gh-tab-icon { font-size: 14px; }
+
+/* 列表容器 */
+.gh-list-wrap {
+  background: var(--color-card);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--color-border);
+  overflow: hidden;
+}
+
+/* 前三名高亮 */
+.gh-top3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  padding: 20px;
+  background: linear-gradient(135deg, #f0fdf4, #eff6ff, #fefce8);
+  border-bottom: 1px solid var(--color-border);
+}
+.gh-top3-card {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 16px 14px;
+  border-radius: var(--radius);
+  background: var(--color-card);
+  border: 1px solid var(--color-border);
+  text-decoration: none;
+  color: inherit;
+  transition: all 0.3s ease;
+}
+.gh-top3-card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-lg);
+  border-color: transparent;
+}
+.gh-top3-medal { font-size: 28px; }
+.gh-top3-repo {
+  font-size: 14px;
+  color: var(--color-text);
+  word-break: break-all;
+}
+.gh-top3-repo strong { color: var(--color-primary); }
+.gh-top3-desc {
+  font-size: 12px;
+  color: var(--color-text-muted);
+  line-height: 1.5;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.gh-top3-stats {
+  display: flex;
+  gap: 10px;
+  font-size: 12px;
+  color: var(--color-text-light);
+  flex-wrap: wrap;
+}
+
+/* 列表标题 */
+.gh-list-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px 12px;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--color-primary);
+}
+.gh-list-updated {
+  font-size: 12px;
+  color: var(--color-text-muted);
+  font-weight: 400;
+}
+
+/* 仓库条目 */
+.gh-list { padding: 0 20px 20px; }
+.gh-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 14px 12px;
+  border-radius: 8px;
+  text-decoration: none;
+  color: inherit;
+  transition: all 0.25s ease;
+  animation: fadeUp 0.4s ease both;
+  border-bottom: 1px solid transparent;
+}
+.gh-item:not(:last-child) { border-bottom-color: var(--color-border); }
+.gh-item:hover {
+  background: linear-gradient(135deg, rgba(45,164,78,0.03), rgba(3,102,214,0.03));
+  padding-left: 16px;
+}
+
+/* 排名 */
+.gh-rank {
+  width: 32px;
+  height: 32px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--color-text-muted);
+  background: var(--color-bg-alt);
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+.gh-rank--top {
+  background: transparent !important;
+  font-size: 22px;
+}
+
+/* 主体 */
+.gh-body { flex: 1; min-width: 0; }
+.gh-repo-line {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-bottom: 4px;
+}
+.gh-repo-icon { font-size: 14px; flex-shrink: 0; }
+.gh-repo-name {
+  font-size: 15px;
+  color: var(--color-text-muted);
+  word-break: break-all;
+}
+.gh-repo-name--bold {
+  color: var(--color-primary);
+  font-weight: 700;
+}
+.gh-item:hover .gh-repo-name--bold { color: #2da44e; }
+
+.gh-desc {
+  font-size: 13px;
+  color: var(--color-text-light);
+  line-height: 1.5;
+  margin: 0 0 8px;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* 元信息 */
+.gh-meta {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.gh-lang {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+  color: var(--color-text-light);
+}
+.gh-lang-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.gh-stat {
+  font-size: 12px;
+  color: var(--color-text-muted);
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+.gh-stat--trend {
+  color: #2da44e;
+  font-weight: 600;
+}
+
+/* 骨架屏 */
+.gh-skeleton {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.gh-skel-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 0;
+  animation: fadeIn 0.4s ease both;
+}
+.gh-skel-rank {
+  width: 32px;
+  height: 32px;
+  border-radius: 6px;
+  background: linear-gradient(90deg, var(--color-bg-alt), var(--color-border), var(--color-bg-alt));
+  background-size: 200% 100%;
+  animation: shimmer 1.5s ease-in-out infinite;
+}
+.gh-skel-body { flex: 1; display: flex; flex-direction: column; gap: 8px; }
+.gh-skel-line {
+  height: 16px;
+  border-radius: 4px;
+  background: linear-gradient(90deg, var(--color-bg-alt), var(--color-border), var(--color-bg-alt));
+  background-size: 200% 100%;
+  animation: shimmer 1.5s ease-in-out infinite;
+}
+.gh-skel-line--short { width: 60%; }
+
+/* 错误 & 空状态 */
+.gh-error, .gh-empty {
+  text-align: center;
+  padding: 60px 20px;
+  color: var(--color-text-light);
+}
+.gh-error-icon, .gh-empty-icon {
+  font-size: 48px;
+  display: block;
+  margin-bottom: 12px;
+}
+.gh-error p, .gh-empty p { margin-bottom: 16px; }
+
+/* 底部说明 */
+.gh-footer-note { max-width: 600px; }
+.gh-footer-note h3 {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--color-primary);
+  margin-bottom: 10px;
+}
+.gh-footer-note p {
+  font-size: 14px;
+  color: var(--color-text-light);
+  line-height: 1.7;
+}
+
+/* 响应式 */
+@media (max-width: 600px) {
+  .gh-hero { padding: 40px 16px 28px; }
+  .gh-hero-meta { flex-direction: column; gap: 8px; }
+  .gh-tabs { border-radius: var(--radius); }
+  .gh-tab { padding: 8px 10px; font-size: 12px; gap: 4px; }
+  .gh-tab-icon { font-size: 13px; }
+  .gh-top3 { grid-template-columns: 1fr; gap: 8px; padding: 12px; }
+  .gh-top3-card { flex-direction: column; padding: 12px; gap: 6px; }
+  .gh-item { padding: 12px 8px; gap: 8px; }
+  .gh-rank { width: 28px; height: 28px; font-size: 14px; }
+  .gh-repo-name { font-size: 13px; }
+  .gh-desc { font-size: 12px; }
+  .gh-stat { font-size: 11px; }
+}

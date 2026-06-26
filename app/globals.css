@@ -1,0 +1,188 @@
+/* ===== Tailwind 基础层 ===== */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ===== 全局基础样式 ===== */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+:root {
+  --color-primary: #1a1a2e;
+  --color-primary-light: #16213e;
+  --color-accent: #e94560;
+  --color-accent-hover: #d63851;
+  --color-gold: #f0a500;
+  --color-teal: #0ea5a9;
+  --color-purple: #7c3aed;
+  --color-blue: #3b82f6;
+  --color-emerald: #10b981;
+  --color-amber: #f59e0b;
+  --color-bg: #fafafa;
+  --color-bg-alt: #f0f0f5;
+  --color-card: #ffffff;
+  --color-text: #2d2d3a;
+  --color-text-light: #6b6b7b;
+  --color-text-muted: #9a9aad;
+  --color-border: #e8e8f0;
+  --color-success: #22c55e;
+  --radius: 12px;
+  --radius-sm: 8px;
+  --radius-lg: 20px;
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+  --shadow-md: 0 4px 14px rgba(0,0,0,0.08);
+  --shadow-lg: 0 10px 40px rgba(0,0,0,0.12);
+  --shadow-glow: 0 0 20px rgba(233, 69, 96, 0.15);
+  --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC',
+    'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+  color: var(--color-text);
+  background: var(--color-bg);
+  line-height: 1.6;
+}
+
+/* 动态背景纹理 */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  background:
+    radial-gradient(ellipse at 20% 20%, rgba(233, 69, 96, 0.04) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 80%, rgba(124, 58, 237, 0.04) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 50%, rgba(14, 165, 169, 0.03) 0%, transparent 50%);
+  pointer-events: none;
+}
+
+/* 浮动粒子背景 */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background-image:
+    radial-gradient(2px 2px at 10% 20%, rgba(233, 69, 96, 0.3), transparent),
+    radial-gradient(2px 2px at 25% 55%, rgba(124, 58, 237, 0.25), transparent),
+    radial-gradient(2px 2px at 40% 15%, rgba(14, 165, 169, 0.25), transparent),
+    radial-gradient(2px 2px at 55% 70%, rgba(233, 69, 96, 0.2), transparent),
+    radial-gradient(2px 2px at 70% 35%, rgba(59, 130, 246, 0.25), transparent),
+    radial-gradient(2px 2px at 85% 60%, rgba(240, 165, 0, 0.25), transparent),
+    radial-gradient(2px 2px at 15% 80%, rgba(16, 185, 129, 0.2), transparent),
+    radial-gradient(2px 2px at 60% 90%, rgba(124, 58, 237, 0.2), transparent),
+    radial-gradient(1px 1px at 90% 10%, rgba(233, 69, 96, 0.3), transparent),
+    radial-gradient(1px 1px at 35% 40%, rgba(14, 165, 169, 0.3), transparent),
+    radial-gradient(1px 1px at 75% 25%, rgba(240, 165, 0, 0.25), transparent),
+    radial-gradient(1px 1px at 5% 45%, rgba(59, 130, 246, 0.25), transparent),
+    radial-gradient(1px 1px at 50% 5%, rgba(233, 69, 96, 0.2), transparent),
+    radial-gradient(1px 1px at 95% 85%, rgba(124, 58, 237, 0.2), transparent);
+  background-size: 200% 200%;
+  animation: particleFloat 20s ease-in-out infinite alternate;
+  pointer-events: none;
+}
+
+@keyframes particleFloat {
+  0% { background-position: 0% 0%; }
+  100% { background-position: 100% 100%; }
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 0 0 0.5em;
+  font-weight: 600;
+  line-height: 1.25;
+}
+
+p {
+  margin: 0 0 1em;
+}
+
+.container {
+  max-width: 1140px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+/* 通用按钮 */
+.btn {
+  display: inline-block;
+  padding: 12px 28px;
+  background: linear-gradient(135deg, var(--color-accent), #ff6b7f);
+  color: #fff;
+  border-radius: 50px;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 1rem;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+.btn::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, transparent 0%, rgba(255,255,255,0.2) 50%, transparent 100%);
+  transform: translateX(-100%);
+  transition: transform 0.6s ease;
+}
+.btn:hover::after {
+  transform: translateX(100%);
+}
+.btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(233, 69, 96, 0.35);
+}
+.btn-outline {
+  background: transparent;
+  border: 1.5px solid var(--color-accent);
+  color: var(--color-accent);
+}
+.btn-outline:hover {
+  background: linear-gradient(135deg, var(--color-accent), #ff6b7f);
+  color: #fff;
+}
+
+/* ===== 全局动画 keyframes ===== */
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes heroGlow {
+  0% { transform: translate(0, 0) rotate(0deg); }
+  100% { transform: translate(-3%, 3%) rotate(3deg); }
+}
