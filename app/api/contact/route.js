@@ -1,12 +1,15 @@
-import { NextResponse } from 'next/server';
+﻿import { NextResponse } from 'next/server';
 import { connectDB } from '@/lib/db';
 import Contact from '@/models/Contact';
 import { verifyAdminToken } from '@/lib/auth';
 
-// 提交联系表单（公开 —— 访客可提交）
+// 提交联系表单（公开 — 访客可提交）
 export async function POST(req) {
   try {
-    await connectDB();
+    const db = await connectDB();
+    if (!db) {
+      return NextResponse.json({ error: '数据库未连接，请稍后重试' }, { status: 503 });
+    }
     const body = await req.json();
 
     if (!body.name || !body.email || !body.message) {
@@ -29,14 +32,17 @@ export async function POST(req) {
   }
 }
 
-// 获取所有联系记录（需鉴权 —— 仅管理端）
+// 获取所有联系记录（需鉴权 — 仅管理端）
 export async function GET(req) {
   try {
     const guard = verifyAdminToken(req);
     if (!guard.ok) {
       return NextResponse.json({ error: guard.error }, { status: guard.status });
     }
-    await connectDB();
+    const db = await connectDB();
+    if (!db) {
+      return NextResponse.json([], { status: 200 });
+    }
     const list = await Contact.find().sort({ createdAt: -1 }).lean();
     return NextResponse.json(list);
   } catch (err) {

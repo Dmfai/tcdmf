@@ -1,4 +1,4 @@
-import { NextResponse } from 'next/server';
+﻿import { NextResponse } from 'next/server';
 import { connectDB } from '@/lib/db';
 import Portfolio from '@/models/Portfolio';
 import { verifyAdminToken } from '@/lib/auth';
@@ -6,7 +6,10 @@ import { verifyAdminToken } from '@/lib/auth';
 // 获取作品列表（公开）
 export async function GET() {
   try {
-    await connectDB();
+    const db = await connectDB();
+    if (!db) {
+      return NextResponse.json([], { status: 200 });
+    }
     const list = await Portfolio.find().sort({ date: -1 }).lean();
     return NextResponse.json(list);
   } catch (err) {
@@ -21,7 +24,10 @@ export async function POST(req) {
     if (!guard.ok) {
       return NextResponse.json({ error: guard.error }, { status: guard.status });
     }
-    await connectDB();
+    const db = await connectDB();
+    if (!db) {
+      return NextResponse.json({ error: '数据库未连接，请稍后重试' }, { status: 503 });
+    }
     const body = await req.json();
 
     if (!body.title) {
