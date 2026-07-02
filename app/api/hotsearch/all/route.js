@@ -5,8 +5,12 @@
 import { NextResponse } from 'next/server';
 
 const API_BASE = 'https://www.coderutil.com/api/resou/v1';
-const ACCESS_KEY = 'f94be500c45148bc185be24a38c04ad3';
-const SECRET_KEY = '27563ca627d5db0d57e831ca4de0f75f';
+const ACCESS_KEY = process.env.CODERUTIL_ACCESS_KEY;
+const SECRET_KEY = process.env.CODERUTIL_SECRET_KEY;
+
+if (!ACCESS_KEY || !SECRET_KEY) {
+  console.warn('[hotsearch/all] CODERUTIL_ACCESS_KEY / CODERUTIL_SECRET_KEY 未配置，API 不可用');
+}
 
 const PLATFORMS = ['weibo', 'zhihu', 'baidu', 'toutiao'];
 
@@ -16,6 +20,10 @@ let allCacheTime = 0;
 const ALL_CACHE_TTL = 5 * 60 * 1000;
 
 export async function GET() {
+  if (!ACCESS_KEY || !SECRET_KEY) {
+    return NextResponse.json({ updatedAt: new Date().toISOString(), platforms: {} });
+  }
+
   if (allCache && Date.now() - allCacheTime < ALL_CACHE_TTL) {
     return NextResponse.json(allCache);
   }

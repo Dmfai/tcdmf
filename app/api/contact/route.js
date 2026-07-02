@@ -24,7 +24,8 @@ export async function POST(req) {
     const item = await Contact.create(body);
     return NextResponse.json({ ok: true, id: item._id }, { status: 201 });
   } catch (err) {
-    return NextResponse.json({ error: err.message || '服务器错误' }, { status: 500 });
+    console.error('[contact] error:', err);
+    return NextResponse.json({ error: '服务器内部错误' }, { status: 500 });
   }
 }
 

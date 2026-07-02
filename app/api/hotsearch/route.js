@@ -4,9 +4,16 @@
  */
 import { NextResponse } from 'next/server';
 
+export const dynamic = 'force-dynamic';
+
 const API_BASE = 'https://www.coderutil.com/api/resou/v1';
-const ACCESS_KEY = 'f94be500c45148bc185be24a38c04ad3';
-const SECRET_KEY = '27563ca627d5db0d57e831ca4de0f75f';
+
+const ACCESS_KEY = process.env.CODERUTIL_ACCESS_KEY;
+const SECRET_KEY = process.env.CODERUTIL_SECRET_KEY;
+
+if (!ACCESS_KEY || !SECRET_KEY) {
+  console.warn('[hotsearch] CODERUTIL_ACCESS_KEY / CODERUTIL_SECRET_KEY 未配置，API 不可用');
+}
 
 // 内存缓存：同一 type 5 分钟内不重复请求
 const cache = new Map();

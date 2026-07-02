@@ -72,6 +72,7 @@ export default function HotSearchPage() {
   const [data, setData] = useState({}); // { weibo: [...], zhihu: [...], ... }
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [updatedAt, setUpdatedAt] = useState(null);
 
   const fetchAll = useCallback(async () => {
     setLoading(true);
@@ -81,6 +82,7 @@ export default function HotSearchPage() {
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
       const json = await res.json();
       setData(json.platforms || {});
+      setUpdatedAt(json.updatedAt || new Date().toISOString());
     } catch (err) {
       setError(err.message);
     } finally {
@@ -192,7 +194,7 @@ export default function HotSearchPage() {
               <div className="hs-list-title">
                 <span>📋 全部热搜</span>
                 <span className="hs-list-updated">
-                  更新于 {new Date().toLocaleTimeString('zh-CN', { hour: '2-digit', minute: '2-digit' })}
+                  更新于 {updatedAt ? new Date(updatedAt).toLocaleTimeString('zh-CN', { hour: '2-digit', minute: '2-digit' }) : '—'}
                 </span>
               </div>
               {currentList.map((item, idx) => (

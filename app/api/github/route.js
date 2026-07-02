@@ -13,7 +13,7 @@
 const GITHUB_SEARCH_URL = 'https://api.github.com/search/repositories';
 
 // 全量缓存 30 分钟
-let cache = null;
+let cacheData = null;
 let cacheTime = 0;
 const CACHE_TTL = 30 * 60 * 1000;
 
@@ -263,9 +263,8 @@ export async function GET(request) {
   const since = searchParams.get('since') || 'weekly';
 
   // 缓存
-  const cacheKey = 'github_ai_v2';
-  if (cache && cache.cacheKey === cacheKey && Date.now() - cacheTime < CACHE_TTL) {
-    return respond(cache.data, cat, since);
+  if (cacheData && Date.now() - cacheTime < CACHE_TTL) {
+    return respond(cacheData, cat, since);
   }
 
   try {
@@ -324,7 +323,7 @@ export async function GET(request) {
       updatedAt: new Date().toISOString(),
     };
 
-    cache = { cacheKey, data };
+    cacheData = data;
     cacheTime = Date.now();
 
     return respond(data, cat, since);

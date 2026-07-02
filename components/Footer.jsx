@@ -1,7 +1,20 @@
-'use client';
+﻿'use client';
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+
+// 与 Navbar 保持一致的导航项（不含管理后台）
+const footerNavItems = [
+  { href: '/', label: '首页' },
+  { href: '/about', label: '关于我们' },
+  { href: '/blog', label: '博客' },
+  { href: '/columns', label: '📚 专栏' },
+  { href: '/hotsearch', label: '🔥 热搜' },
+  { href: '/github', label: '🤖 GitHub AI周榜' },
+  { href: '/portfolio', label: '作品' },
+  { href: '/services', label: '服务' },
+  { href: '/contact', label: '联系' },
+];
 
 export default function Footer() {
   const pathname = usePathname();
@@ -17,7 +30,7 @@ export default function Footer() {
             <img src="/logo.png" alt="文辉工作室" className="footer-logo" />
             文辉工作室
           </Link>
-          <p>用文字照亮独立创作的每一步。</p>
+          <p>用文字照亮独立创作的每一步</p>
           <div className="footer-social">
             <a href="https://wx.qq.com" target="_blank" rel="noopener noreferrer" aria-label="微信" title="微信" className="social-link">
               <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
@@ -37,14 +50,15 @@ export default function Footer() {
           </div>
         </div>
         <div className="footer-links">
-          <Link href="/about">关于</Link>
-          <Link href="/blog">博客</Link>
-          <Link href="/portfolio">作品</Link>
-          <Link href="/contact">联系</Link>
+          {footerNavItems.map((item) => (
+            <Link key={item.href} href={item.href}>
+              {item.label}
+            </Link>
+          ))}
         </div>
       </div>
       <div className="footer-copy">
-        © {year} 文辉工作室. 保留所有权利.
+        © {year} 文辉工作室 保留所有权利
       </div>
     </footer>
   );

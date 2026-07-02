@@ -10,7 +10,7 @@ export async function GET() {
     const list = await Portfolio.find().sort({ date: -1 }).lean();
     return NextResponse.json(list);
   } catch (err) {
-    return NextResponse.json({ error: '服务器错误' }, { status: 500 });
+    return NextResponse.json({ error: '服务器内部错误' }, { status: 500 });
   }
 }
 
@@ -38,6 +38,6 @@ export async function POST(req) {
     const item = await Portfolio.create(body);
     return NextResponse.json(item, { status: 201 });
   } catch (err) {
-    return NextResponse.json({ error: err.message || '服务器错误' }, { status: 500 });
+    return NextResponse.json({ error: '服务器内部错误' }, { status: 500 });
   }
 }

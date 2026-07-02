@@ -98,7 +98,7 @@ export default function BlogForm({ initial = {}, onSubmit, submitText = '保存'
           className="admin-textarea"
           value={form.content}
           onChange={onChange}
-          placeholder="# 标题&#10;&#10;在这里写正文…"
+          placeholder={"# 标题\n\n在这里写正文…"}
           rows={18}
           required
         />
